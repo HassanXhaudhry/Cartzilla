@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Drawer } from 'antd';
+import { Drawer } from 'antd';
 
 const MyDrawer = ({ isOpen, closeDrawer }) => {
-  const [loading, setLoading] = useState(false);
 
-  const showLoading = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      setLoading(false);
-      closeDrawer(); 
-    }, 2000);
-  };
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden'; 
@@ -26,17 +17,9 @@ const MyDrawer = ({ isOpen, closeDrawer }) => {
       destroyOnClose
       title="Loading Drawer"
       placement="right"
-      visible={isOpen} // Use the isOpen prop to control visibility
-      onClose={closeDrawer} // Use the closeDrawer function to handle close event
+      visible={isOpen} 
+      onClose={closeDrawer} 
     >
-      <Button
-        type="primary"
-        style={{ marginBottom: 16 }}
-        onClick={showLoading}
-        loading={loading}
-      >
-        {loading ? 'Loading...' : 'Reload'}
-      </Button>
       <p>Some contents...</p>
       <p>Some contents...</p>
       <p>Some contents...</p>

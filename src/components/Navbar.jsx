@@ -12,7 +12,6 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import FaXmark from "../assets/cross.png"
 import FaBars from "../assets/bars.png"
 import { Tooltip } from "flowbite-react";
-import Language from '../data/Languages'
 import Currency from '../data/Currencies.json'
 
 const Navbar = ({ openDrawer }) => {
@@ -22,9 +21,7 @@ const Navbar = ({ openDrawer }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollLock, setScrollLock] = useState(false);
   const [icon, setIcon] = useState(darkMode ? FiSun : FiMoon);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isCurrencyOpen, setIsCurrencyOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('English');
   const [selectedCurrency, setSelectedCurrency] = useState('USD');
 
 
@@ -70,17 +67,8 @@ const Navbar = ({ openDrawer }) => {
     toggleIcon();
   };
 
-  const toggleLanguageDropdown = () => {
-    setIsLanguageOpen(!isLanguageOpen);
-};
-
 const toggleCurrencyDropdown = () => {
   setIsCurrencyOpen(!isCurrencyOpen);
-};
-
-const selectLanguage = (language) => {
-  setSelectedLanguage(language);
-  setIsLanguageOpen(false);
 };
 
 const selectCurrency = (currency) => {
@@ -232,51 +220,31 @@ const selectCurrency = (currency) => {
           </div></div>
 
           <div className="md:block hidden">
-      <div className="flex gap-6 text-white justify-center text-xs">
-        <div className="relative cursor-pointer flex items-center gap-2" onClick={toggleLanguageDropdown}>
-          <p>{selectedLanguage}</p>
-          {isLanguageOpen ? (
-            <IoIosArrowUp className="text-white h-4 w-4 pt-1" />
-          ) : (
-            <IoIosArrowDown className="text-white h-4 w-4 pt-1" />
-          )}
-          {isLanguageOpen && (
-            <div className="absolute left-0 mt-[20px] text-[#475467] text-xs top-full w-32 bg-white border border-gray-600 shadow-lg rounded-b-md overflow-y-auto max-h-44 h-40 z-10">
-              {Language.map((post, index) => (
-                <div
-                  key={index}
-                  className="p-2 cursor-pointer hover:text-white hover:bg-[#475467]"
-                  onClick={() => selectLanguage(post.name)}
-                >
-                  {post.name}
+          <div className="flex gap-6 text-white items-center justify-center text-xs">
+            <div className="relative cursor-pointer flex items-center gap-2" onClick={toggleCurrencyDropdown}>
+              <p className="relative pt-[4px]">{selectedCurrency}</p>
+              {isCurrencyOpen ? (
+                <IoIosArrowUp className="text-white h-4 w-4 pt-1" />
+              ) : (
+                <IoIosArrowDown className="text-white h-4 w-4 pt-1" />
+              )}
+              {isCurrencyOpen && (
+                <div className="absolute left-0 mt-[20px] text-[#475467] text-xs top-full w-32 bg-white border border-gray-600 shadow-lg rounded-b-md overflow-y-auto max-h-44 h-40 z-10">
+                  {Currency.map((post, index) => (
+                    <div
+                      key={index}
+                      className="p-2 cursor-pointer hover:text-white hover:bg-[#475467]"
+                      onClick={() => selectCurrency(post.symbol)}
+                    >
+                      {post.symbol}
+                    </div>
+                  ))}
                 </div>
-              ))}
+              )}
             </div>
-          )}
+          </div>
         </div>
-        <div className="relative cursor-pointer flex items-center gap-2" onClick={toggleCurrencyDropdown}>
-          <p>{selectedCurrency}</p>
-          {isCurrencyOpen ? (
-            <IoIosArrowUp className="text-white h-4 w-4 pt-1" />
-          ) : (
-            <IoIosArrowDown className="text-white h-4 w-4 pt-1" />
-          )}
-          {isCurrencyOpen && (
-            <div className="absolute left-0 mt-[20px] text-[#475467] text-xs top-full w-32 bg-white border border-gray-600 shadow-lg rounded-b-md overflow-y-auto max-h-44 h-40 z-10">
-              {Currency.map((post, index) => (
-                <div
-                  key={index}
-                  className="p-2 cursor-pointer hover:text-white hover:bg-[#475467]"
-                  onClick={() => selectCurrency(post.symbol)}
-                >
-                  {post.symbol}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
+        
 
 
         </div>

@@ -224,7 +224,7 @@ const Home = () => {
         <img
             src={person}
             alt=""
-            className="w-52 h-52 hidden md:block"
+            className="w-52 h-52 hidden lg:block"
         />
     </motion.div>
 </div>
