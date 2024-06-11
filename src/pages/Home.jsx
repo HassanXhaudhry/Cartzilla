@@ -15,8 +15,12 @@ import Products from '../data/Products';
 import Whatsapp from '../components/Whatsapp'
 import { data } from '../data/mockData'
 import MyDrawer from "../components/MyDrawer";
+import { useDispatch, useSelector } from "react-redux";
+import { add } from '../reducers/CartReducer';
 
 const Home = () => {
+  const dispatch = useDispatch();
+
   const { darkMode } = useTheme();
   const [noOfElement, setnoOfElement] = useState(8);
   const [hoveredItem, setHoveredItem] = useState(null);
@@ -143,30 +147,35 @@ const Home = () => {
             <br /> <hr className="w-full border-gray-500 mx-28" />
           </div>
           <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-10 sm:grid-cols-2 grid-cols-1 sm:mx-28 mx-12">
-            {slice.map((data, index) => (
+          {slice.map((data, index) => (
               <div
-                key={index}
-                className="relative"
-                onMouseEnter={() => setHoveredItem(index)}
-                onMouseLeave={() => setHoveredItem(null)}
+                  key={data.id}
+                  className="relative"
+                  onMouseEnter={() => setHoveredItem(index)}
+                  onMouseLeave={() => setHoveredItem(null)}
               >
-                <div className="flex justify-center">
-                  <img src={data.image} alt="" className="w-40 h-40" />
-                </div>
-                <h4 className="text-xs font-Poppins">{data.title}</h4>
-                <h4 className="text-md font-Montserrat font-semibold">{data.price}</h4>
-                <div className="flex items-center justify-center cursor-pointer gap-2 mx-10 bg-gray-300 dark:bg-white text-black rounded-3xl h-8 my-3">
-                  <button className="text-xs font-semibold">Add to cart</button>
-                  <img src={data.cart} alt="" className="h-4 w-4" />
-                </div>
-                {hoveredItem === index && (
-                  <div className="absolute top-full left-0 mt-1 p-[7px] bg-gray-100 text-gray-800 rounded-md text-[10px] z-10">
-                    {data.description}
+                  <div className="flex justify-center">
+                      <img src={data.image} alt="" className="w-40 h-40" />
                   </div>
-                )}
+                  <h4 className="text-xs font-Poppins">{data.title}</h4>
+                  <h4 className="text-md font-Montserrat font-semibold">{data.price}</h4>
+                  <div className="flex items-center justify-center cursor-pointer gap-2 mx-10 bg-gray-300 dark:bg-white text-black rounded-3xl h-8 my-3"
+                  onClick={() => dispatch(add(data))}>
+                      <button
+                          className="text-xs font-semibold"
+                      >
+                          Add to cart
+                      </button>
+                      <img src={data.cart} alt="" className="h-4 w-4" />
+                  </div>
+                  {hoveredItem === index && (
+                      <div className="absolute top-full left-0 mt-1 p-[7px] bg-gray-100 text-gray-800 rounded-md text-[10px] z-10">
+                          {data.description}
+                      </div>
+                  )}
               </div>
-            ))}
-          </div>
+          ))}
+      </div>
           <div className="flex justify-center items-center py-6">
             <br /> <hr className="w-full border-gray-500 mx-28" />
           </div>

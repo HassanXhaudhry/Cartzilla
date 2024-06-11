@@ -13,8 +13,12 @@ import FaXmark from "../assets/cross.png"
 import FaBars from "../assets/bars.png"
 import { Tooltip } from "flowbite-react";
 import Currency from '../data/Currencies.json'
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = ({ openDrawer }) => {
+  const dispatch = useDispatch();
+  const { amount } = useSelector((state) => state.cart);
+
   const [isOpen, setIsOpen] = useState(true);
   const [isArrow, setIsArrow] = useState(false);
   const { darkMode, toggleDarkMode } = useTheme();
@@ -141,7 +145,8 @@ const selectCurrency = (currency) => {
                 alt=""
                 className="rounded-full bg-gray-500 cursor-pointer w-9 h-9" onClick={openDrawer}
               /></Tooltip>
-              <div className="absolute h-4 w-4 bg-green-400 rounded-full top-[-2px] right-[-4px]"></div>
+              <div className="absolute flex justify-center items-center text-xs bg-green-400 text-white font-Poppins h-4 w-4 rounded-full top-[-2px] right-[-4px]">
+              {amount}</div>
             </div>
           </div>
           <button
@@ -221,15 +226,15 @@ const selectCurrency = (currency) => {
 
           <div className="md:block hidden">
           <div className="flex gap-6 text-white items-center justify-center text-xs">
-            <div className="relative cursor-pointer flex items-center gap-2" onClick={toggleCurrencyDropdown}>
-              <p className="relative pt-[4px]">{selectedCurrency}</p>
+            <div className="relative cursor-pointer flex items-center gap-2 right-10 pt-1" onClick={toggleCurrencyDropdown}>
+              <p className="relative">{selectedCurrency}</p>
               {isCurrencyOpen ? (
                 <IoIosArrowUp className="text-white h-4 w-4 pt-1" />
               ) : (
                 <IoIosArrowDown className="text-white h-4 w-4 pt-1" />
               )}
               {isCurrencyOpen && (
-                <div className="absolute left-0 mt-[20px] text-[#475467] text-xs top-full w-32 bg-white border border-gray-600 shadow-lg rounded-b-md overflow-y-auto max-h-44 h-40 z-10">
+                <div className="absolute  mt-[16px] text-[#475467] text-xs top-full w-32 bg-white border border-gray-600 shadow-lg rounded-b-md overflow-y-auto max-h-44 h-40 z-10">
                   {Currency.map((post, index) => (
                     <div
                       key={index}
