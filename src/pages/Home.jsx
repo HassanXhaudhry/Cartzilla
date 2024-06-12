@@ -66,7 +66,9 @@ const Home = () => {
   return (
     <Fragment>
       <div ref={tranform3d} className={`${darkMode ? "dark" : ""}`}>
+      
         <Navbar darkMode={darkMode} openDrawer={toggleDrawer} />
+        
         <div className="dark:bg-dark h-[420px] flex justify-end">
           <div className="w-auto max-w-[900px] sm:m-10 m-4 z-0">
             <Carousel data-bs-theme="dark" className="mt-20">
@@ -136,7 +138,7 @@ const Home = () => {
             </Carousel>
           </div>
         </div>
-
+       
     <MyDrawer isOpen={isOpen} closeDrawer={toggleDrawer}/>
         <div className="dark:bg-dark h-auto dark:text-white py-20 pt-[350px] md:pt-28">
           <div className="flex justify-between sm:px-28 px-10 md:px-12 items-center">
