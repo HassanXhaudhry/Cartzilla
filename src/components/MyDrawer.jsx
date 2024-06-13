@@ -1,11 +1,13 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useEffect } from "react";
 import { Drawer } from "antd";
 import { Toast } from "flowbite-react";
 import { HiExclamation } from "react-icons/hi";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { increase, decrease, remove } from "../reducers/CartReducer"; // Adjust the import path as needed
 
 const MyDrawer = ({ isOpen, closeDrawer }) => {
-  const { cartItems } = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+  const { cartItems, total } = useSelector((state) => state.cart);
 
   useEffect(() => {
     if (isOpen) {
@@ -44,11 +46,36 @@ const MyDrawer = ({ isOpen, closeDrawer }) => {
                     <div>
                       <h4 className="text-md font-semibold">{item.title}</h4>
                       <p className="text-sm">Quantity: {item.amount}</p>
-                      <p className="text-sm">${item.price}</p>
+                      <p className="text-sm">${(item.price * item.amount).toFixed(2)}</p>
+                      <div className="flex items-center gap-2 mt-2">
+                        <button
+                          className="px-2 py-1 bg-gray-500 text-white rounded-sm"
+                          onClick={() => dispatch(increase({ id: item.id }))}
+                        >
+                          +
+                        </button>
+                        <button
+                          className="px-2 py-1 bg-gray-500 text-white rounded-sm"
+                          onClick={() => dispatch(decrease({ id: item.id }))}
+                        >
+                          -
+                        </button>
+                        <button
+                          className="px-2 py-1 bg-red-600 text-white flex rounded-sm items-center justify-center"
+                          onClick={() => dispatch(remove({ id: item.id }))}
+                        >
+                          Remove
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
+              <div className="mt-4 flex justify-between">
+                <h4 className="text-lg font-semibold">Sub Total: </h4>
+                <h4 className="text-lg font-semibold">${total.toFixed(2)}</h4>
+              </div>
+              <button className="bg-gray-600 text-white py-2 mx-4 text-md rounded-md font-Poppins font-semibold">Pay &nbsp; ${total.toFixed(2)}</button>
             </div>
           )}
         </div>
